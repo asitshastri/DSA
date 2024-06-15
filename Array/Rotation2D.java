@@ -1,6 +1,5 @@
 package Array;
 import java.util.*;
-import java.util.*;
 
 public class Rotation2D {
     public static void rotatedMatrix(int[][] arr){

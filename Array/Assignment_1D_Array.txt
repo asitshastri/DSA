@@ -1,0 +1,135 @@
+Q1: Write a program to print the sum of all the elements present on even indices in the given array.
+Input 1: arr[] = {3,20,4,6,9}
+ans:
+public static void main(String[] args) {
+        int arr[] = {3,20,4,6,9};
+        int sum = 0;
+        for (int i=0;i<arr.length;i=i+2) {
+            sum+=arr[i];
+        }
+        System.out.println(sum);
+    }
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Q2: Write a program to traverse over the elements of the array using for each loop and print all even
+elements.
+Input 1: arr[] = {34,21,54,65,43}
+ans:
+public static void main(String[] args) {
+        int arr[] = {34,21,54,65,43};
+        for (int i : arr) {
+            if(i%2==0){
+                System.out.print(i+" ");
+            }
+        }
+    }
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Q3: Write a program to calculate the maximum element in the array.
+Input 1: arr[] = {34,21,54,65,43}
+ans:
+#Brute Force Solution
+    1-Sort array
+    2-Print Last element (i.e arr[arr.length-1])
+    Disadvantage- Time complexity for sorting =O(n)and Space Complexity=O(1)
+
+#Optimal Solution
+public static void main(String[] args) {
+        int arr[] = {34,21,54,65,43};
+        int largest=arr[0];
+        for (int i=1;i<arr.length;i++) {
+            if(arr[i]>largest){
+                largest=arr[i];
+            }
+        }
+        System.out.println(largest);
+    }
+    Time Complexity=O(n) & Space Complexity=O(1)
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Q4: Write a program to find out the second largest element in a given array.
+Input 1: arr[] = {34,21,54,65,43}
+ans:
+#Brute Force Solution:
+    1- Sort the array
+    2- ex: int arr={1,2,4,5,7,7};
+    3- largest= arr[arr.length-1]
+    4- for(i=arr.length-2;i>=0;i--){
+        if(arr[i]!=largest){
+            second_largest = arr[i];
+            break;
+        }
+    }
+    Problem:- if arr={1,7,7,7,7,7,7,7} then the for loop will traverse all the array again
+              if arr={7,7,7,7,7,7,7,7} then no 2nd largest element
+              thus worst case
+              complexity= Nlog+N
+
+#Better Solution:
+    1- First find the largest element using Q3
+    2-take second_large=-1
+        check if:-
+        -second_large<arr[0]?
+        -second_large<largest?
+        -if both yes then let: second_large=arr[0]
+    Time Complexity: O(N+N)=O(2N) //don't mention O(N in interview)
+
+#Optimal Solution:
+    1- arr={1,2,4,7,7,5};
+    2- largest = arr[0]
+    3- second_largest = -1(assuming no -ve no) or second_largest=Integer.MIN_VALUE(if -ve no exist in array)
+    4- concept= When a new no becomes largest the previous largest becomes 2nd largest
+//secondLargest
+    public static int secondLargest(int arr[],int n){
+        int largest = arr[0];
+        int sLargest = -1;
+        for(int i=1;i<n;i++){
+            if(arr[i]>largest){
+                sLargest=largest;
+                largest=arr[i];
+            }
+            else if(arr[i]<largest && arr[i]>sLargest){
+                sLargest = arr[i];
+            }
+        }
+        return sLargest;
+    }
+    //secondSmallest
+    public static int secondSmallest(int arr[],int n){
+        int smallest = arr[0];
+        int sSmallest = Integer.MAX_VALUE;
+        for(int i=1;i<n;i++){
+            if(arr[i]<smallest){
+                sSmallest = smallest;
+                smallest = arr[i];
+            }
+            else if(arr[i]!=smallest && arr[i]<sSmallest){
+                sSmallest = arr[i];
+            }
+        }
+        return sSmallest;
+    }
+    public static void main(String[] args) {
+        int arr[] = {34,21,54,65,43};
+        int n=arr.length;
+        int sSmallest = secondSmallest(arr,n);
+        int sLargest = secondLargest(arr,n);
+        System.out.println("Second Smallest Element= "+sSmallest+"\nSecond Largest Element= "+sLargest);
+    }
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Q5: Given an array. Find the first peak element in the array. A peak element is an element that is greater than
+its just left and just right neighbor.
+ans:
+public static void main(String[] args){
+        int peak = -1;
+        int arr[] = {1, 4,7,3,2,6,5};
+        for(int i=1;i<arr.length-1;i++){
+            if(arr[i]>arr[i-1] && arr[i]>arr[i+1]){
+                if(peak<arr[i]){
+                    peak = arr[i];
+                }
+            }  
+        }
+        System.out.println(peak);
+    }
