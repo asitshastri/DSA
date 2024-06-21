@@ -1,0 +1,411 @@
+-------------------------------------------------------------------------------------------------------------------
+                                    Number System
+-------------------------------------------------------------------------------------------------------------------
+Problem 1: given a number, print its binary representation. [easy]
+Solution
+            number = 5
+            2 | 10
+            —-----
+            2 | 5 0
+            —-----
+            2 | 2 1
+            —-----
+            2 | 1 0
+
+Problem 2: given a number ‘n’, predict whether it is a power of two or not. [medium]
+solution: number = 32 (for example)
+          number = 100000 (in binary)
+          only one set bit 1 therefore it is power of 2
+
+Q3. Problem 1: Given a number. Using bit manipulation, check whether it is odd or even.
+ans:
+            public class CheckEvenOdd {
+                public static void main(String[] args) {
+                    int number;
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Enter a number:- ");
+                    number = sc.nextInt();
+
+                    if((number&1)==1){
+                        System.out.println("It's an Odd number");
+                    }
+                    else System.out.println("Even number");
+                }    
+            }
+
+/*Q4. Given a number, count the number of set bits in that number without using an extra space. */
+
+            public static int setCount(int n){
+                int count = 0;
+                while(n>0){
+                    if((n&1)==1){
+                        count++;
+                    }
+                    n>>=1;
+                }
+                return count;
+            }
+            public static void main(String[] args) {
+                int n;
+                System.out.print("Enter a number:- ");
+                Scanner sc = new Scanner(System.in);
+                n = sc.nextInt();
+                int count = setCount(n);
+                System.out.println("Number of Sets = "+count);
+                sc.close();
+            }
+
+Q5. Given an integer array, duplicates are present in it in a way that all duplicates appear an even
+number of times except one which appears an odd number of times. Find that odd appearing
+element in linear time and without using any extra memory.
+ans:
+public class OddOccuringElement {
+            public static int findOddOccuring(int[] arr)
+            {
+                int xor = 0;
+                for (int i: arr) {
+                    xor = xor ^ i;
+                }
+                return xor;
+            }
+            public static void main(String[] args) {
+                int n;  
+                Scanner sc=new Scanner(System.in);  
+                System.out.print("Enter the number of elements you want to store: ");  
+                //reading the number of elements from the that we want to enter  
+                n=sc.nextInt();  
+                //creates an array in the memory of length 10  
+                int[] array = new int[n];  
+                System.out.println("Enter the elements of the array: ");  
+                for(int i=0; i<n; i++)  
+                {  
+                //reading array elements from the user   
+                    array[i]=sc.nextInt();  
+                }
+                System.out.println("The odd occurring element is " + findOddOccuring(array));
+                sc.close();
+            }
+        }
+
+-------------------------------------------------------------------------------------------------------------------
+                                Linear ans Binary Search
+-------------------------------------------------------------------------------------------------------------------
+Q1. Given an array. Find the number X in the array. If the element is present, return the index of the element,
+else print “Element not found in array”.
+Input the size of array, array from user and the element X from user. Use Linear Search to find the element.
+ans:
+                    int m;
+                    Scanner sc=new Scanner(System.in);
+                    System.out.print("Enter the number of elements you want to add : ");
+                    m=sc.nextInt();      
+                    
+                    int []arr = new int[m];
+                    
+                    System.out.print("Enter the elements of the array: ");
+                    
+                    for(int i=0;i<m;i++){
+                        arr[i] = sc.nextInt();
+                    }
+
+                    int element;
+                    System.out.print("Enter the elements to be searched in array");
+                    element = sc.nextInt();
+                    
+
+                    int idx = -1;
+                    for(int i=0;i<m;i++){
+                        if(arr[i]==element){
+                            idx = i;
+                            break;
+                        }
+                    }
+
+                    if(idx!=-1){
+                        System.out.println(idx);
+                    }
+                    else{
+                        System.out.println("Element not found in array");
+                    }
+
+Q2. Given an array and an integer “target”, return the last occurrence of “target” in the array. If the target is
+not present return -1.
+Input 1: arr = [1 1 1 2 3 4 4 5 6 6 6 6] , target = 4 Output 1: 6
+Input 2: arr = [2 2 2 6 6 18 29 30 30 30] , target = 15
+Output 2: -1
+ans:
+                public static int upperBound(int arr[],int target){
+                        int low=0;int high=arr.length-1;
+                        int result = -1;
+                        while(low<=high){
+                            int mid = low+(high-low)/2;
+                            if(arr[mid]==target){
+                                result = mid;
+                                low = mid+1;
+                            }
+                            if(arr[mid]>target){
+                                high=mid-1;
+                            }
+                            else low=mid+1;
+                        }
+                        return result;
+                    }
+                    public static void main(String[] args) {
+                        //scanner class object
+                        Scanner sc = new Scanner(System.in);
+                        System.out.print("Enter no of elements in Array:- ");
+                        int n = sc.nextInt();
+
+                        System.out.println("Enter array elements:- ");
+                        int arr[] = new int[n];
+
+                        //inputting array elements
+                        for(int i=0;i<n;i++){
+                            arr[i] = sc.nextInt();
+                        }
+
+                        //target element
+                        System.out.println("Enter target Element:- ");
+                        int target = sc.nextInt();
+
+                        //Implementing Linerar Search
+                        int result = upperBound(arr,target);
+                        if(result==-1){
+                            System.out.println("Element not found");
+                        }
+                        else{System.out.println("Last Occurance of Element is at index: "+result);}
+                        sc.close();
+                    }
+
+Q3. Given a sorted binary array, efficiently count the total number of 1’s in it.
+Input 1: arr = [0 0 0 0 1 1 1 1 1 1] Output 1: 6
+Input 2: arr = [ 0 0 0 0 0 0  1 1] Output: 2
+ans:
+                public static int numberOf1s(int arr[],int low,int high){
+                        while(low<=high){
+                        int mid = low + (high-low)/2;
+                            if(arr[mid] == 0){
+
+                                low = mid+1;
+                            }
+                            else high = mid-1;
+                        }
+                        return arr.length-low;
+                    }
+                    public static void main(String[] args) {
+                        int m;
+                        Scanner sc=new Scanner(System.in);
+                        System.out.print("Enter the number of elements you want to add : ");
+                        m=sc.nextInt();      
+                        
+                        int []arr = new int[m];
+                        
+                        System.out.print("Enter the elements of the array: ");
+                        
+                        for(int i=0;i<m;i++){
+                            arr[i] = sc.nextInt();
+                        }
+                        
+                        System.out.println("The number of one's in the given array is/are: " + numberOf1s(arr , 0 , m - 1));
+                        sc.close();
+                    }
+
+Q4. Given a sorted integer array containing duplicates, count occurrences of a given number. If the element is
+not found in the array, report that as well.
+Input: nums[] = [2, 5, 5, 5, 6, 6, 8, 9, 9, 9] target = 5
+Output: Target 5 occurs 3 times
+Input: nums[] = [2, 5, 5, 5, 6, 6, 8, 9, 9, 9] target = 6
+Output: Target 6 occurs 2 times
+ans:
+                public static int upperBound(int arr[],int low,int high,int target){
+                        int result = -1;
+                        while(low<=high){
+                            int mid = low+(high-low)/2;
+                            if(arr[mid]==target){
+                                result = mid;
+                                low = mid+1;
+                            }
+                            if(arr[mid]>target){
+                                high=mid-1;
+                            }
+                            else low=mid+1;
+                        }
+                        return result;
+                    }
+                    public static int lowerBound(int arr[],int low,int high,int target){
+                        int result = -1;
+                        while(low <= high){
+                            int mid = low + (high - low)/2;
+                            if(arr[mid] == target){
+                                result = mid;
+                                high = mid-1;
+                            }
+                            else if(arr[mid] < target){
+                                low = mid + 1;
+                            }
+                            else{
+                                high = mid - 1;
+                            }
+                        }
+                        return result;
+                    }
+                    public static void main(String[] args) {
+                        int m;
+                        Scanner sc=new Scanner(System.in);
+                        System.out.print("Enter the number of elements you want to add : ");
+                        m=sc.nextInt();      
+                        
+                        int []arr = new int[m];
+                        
+                        System.out.print("Enter the elements of the array: ");
+                        
+                        for(int i=0;i<m;i++){
+                            arr[i] = sc.nextInt();
+                        }
+                        
+                        int target;
+                        Scanner sc1 = new Scanner(System.in);
+                        System.out.print("enter the target: ");
+                        target = sc1.nextInt();
+                        
+                        int first = lowerBound(arr , 0 , m - 1 , target);
+                        int last = upperBound(arr , 0 , m - 1 , target);
+                        
+                        if(first == last && first == -1)System.out.println("The target does not exist in the array.");
+                        else System.out.println("The frequency of target in the given array is " + (last - first + 1) + " time/times");
+                        sc.close();
+                    }
+
+Q5. Given a positive integer num, return true if num is a perfect square or false otherwise.
+A perfect square is an integer that is the square of an integer. In other words, it is the product
+ of some integer with itself.
+Example 1:
+Input: num = 16
+Output: true
+Explanation: We return true because 4 * 4 = 16 and 4 is an integer.
+Example 2:
+Input: num = 1
+Output: false
+Explanation: We return false because 3.742 * 3.742 = 14 and 3.742 is not an integer.
+ans:
+public static boolean isPerfectSquare(int num){
+        boolean res = false;
+        long start = 0;
+        long end = num/2;
+        while(start<=end){
+            long mid = start + (end-start)/2;
+            if(mid*mid == num){res=true;} 
+            if(mid*mid > num){ end = mid-1;}
+            else{start=mid+1;}
+            
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        int m;
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the number : ");
+        m=sc.nextInt();      
+       
+        System.out.println("The given number is a perfect square: " + isPerfectSquare(m));
+    }
+
+-------------------------------------------------------------------------------------------------------------------
+                                    Sorting in Array
+-------------------------------------------------------------------------------------------------------------------
+Q1. Write a program to sort an array in descending order using bubble sort.
+Input Array {3,5,1,6,0}
+Output Array: {6, 5, 3, 1, 0}
+ans:
+                public static void bubbleSort(int arr[]){
+                        for(int i=0;i<arr.length;i++){
+                            boolean swapped = false;
+                            for(int j=0;j<arr.length-i-1;j++){
+                                if(arr[j]<arr[j+1]){
+                                    //swap arr[j] and arr[j+1]
+                                    int temp = arr[j];
+                                    arr[j] = arr[j+1];
+                                    arr[j+1] = temp;
+
+                                    swapped = true;
+                                }
+                            }
+                            if(!swapped){
+                                break;
+                            }
+                        }
+
+                    }
+                    public static void main(String[] args) {
+                        // array definition
+                        int[] arr = {3,5,1,6,0};
+                        // function calling
+                        bubbleSort(arr);
+                        System.out.println("Sorted array is: ");
+                        System.out.println(Arrays.toString(arr));
+                    }
+
+Q2. WAP to sort an array in descending order using selection sort
+Input Array {3,5,1,6,0}
+Output Array: {6, 5, 3, 1, 0}
+ans:
+                public static void selectionSort(int arr[]){
+                        for(int i=0;i<arr.length;i++){
+                            int min_idx = i;
+                            for(int j=i+1;j<arr.length;j++){
+                                if(arr[j]>arr[min_idx]){
+                                    min_idx = j;
+                                }
+                            }
+                            if(min_idx!=i){
+                                int temp = arr[min_idx];
+                                arr[min_idx] = arr[i];
+                                arr[i] = temp;
+                            }
+                        }
+                    }
+                    public static void main(String[] args) {
+                        int arr[] = {3,5,1,6,0};
+                        //calling function
+                        selectionSort(arr);
+                        System.out.println("Sorted Array");
+                        System.out.println(Arrays.toString(arr));
+                    }
+
+Q3. WAP to sort an array in decreasing order using insertion sort
+Input Array {3,5,1,6,0}
+Output Array: {6, 5, 3, 1, 0}
+ans:
+                public static void insertionSort(int arr[]){
+                        for(int i=1;i<arr.length;i++){
+                            int j=i;
+                            while(j>0 && arr[j]>arr[j-1]){
+                                //swap arr[j] and arr[j-1]
+                                int temp = arr[j];
+                                arr[j] = arr[j-1];
+                                arr[j-1] = temp;
+
+                                j--;
+                            }
+                        }
+                    }
+                    public static void main(String[] args) {
+                        int arr[] = {3,5,1,6,0};
+                        //function call
+                        insertionSort(arr);
+                        System.out.println("Sorted array is: ");
+                        System.out.println(Arrays.toString(arr));
+                    }
+
+Q4. Find out how many pass would be required to sort the following array in decreasing order
+using bubble sort
+Input Array {3,5,1,6,0}
+ans: 3 iterations are required
+
+Q5. Find out the number of iterations to sort the array in descending order using selection sort.
+Input Array {3,5,1,6,0}
+ans: iterations are required.
+     Original Array is {3 5 1 6 0}
+     In first iteration array is {6 5 1 3 0}
+     In second iteration array is {6 5 1 3 0}
+     In third iteration array is {6 5 3 1 0}
+     Now the array is sorted.
