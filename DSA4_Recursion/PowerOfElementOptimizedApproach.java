@@ -15,7 +15,7 @@ public class PowerOfElementOptimizedApproach {
             result = pow(a, b / 2);
             result *= result;
             if (b % 2 == 1) {
-                return 2 * result;
+                return a * result;
             } else
                 return result;
         }
