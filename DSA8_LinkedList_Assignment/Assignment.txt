@@ -153,6 +153,35 @@ Solution
                 new_node.next = head;
                 head = new_node;
             }
+            //Time Complexity: O(n) and Space Complexity:O(1)
+
+            Another Approach:By converting Linked List to ArrayList(i.e Dynamic array)
+            public boolean isPalindrome(ListNode head) {
+                //creating a ArrayList: because its dynamic array
+                List<Integer> list = new ArrayList<>();
+
+                //converting Linked List to arrayList
+                ListNode current = head;
+                while(current!=null){
+                    list.add(current.val);
+                    current = current.next;
+                }
+
+                //applying two pointers approach
+                int low = 0;
+                int high = list.size()-1;
+
+                while(low<high){
+                    if(!list.get(low).equals(list.get(high))){
+                        return false;
+                    }
+                    low+=1;
+                    high-=1;
+                }
+                return true;
+            }
+            //Time Complexity: O(n) and Space Complexity:O(n)
+
 
 
 Q5. Given two numbers represented by two lists, write a function that returns the sum list. The
