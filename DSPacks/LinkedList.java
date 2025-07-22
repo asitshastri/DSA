@@ -1,8 +1,8 @@
-package DSA8_LinkedList;
+package DSPacks;
 
-public class LL_insertInMiddle {
+public class LinkedList {
     //initializing head
-    Node head;
+    public Node head;
     //creating a Node class 
     class Node{
         int data;
@@ -54,7 +54,7 @@ public class LL_insertInMiddle {
     }
     //Inserting after any Node in LinkedList
     public void insertAfter(Node previousNode,int newData){
-        if(previousNode.next==null){
+        if(previousNode==null){
             System.out.println("Previous node can't contain null value");
             return;
         }
@@ -62,14 +62,45 @@ public class LL_insertInMiddle {
         newNode.next = previousNode.next;
         previousNode.next = newNode;
     }
+
+    //Deletion
+    public void deleteFrom(int position){
+       //Empty LinkedList
+       if(head==null){
+           return;
+       }
+
+       Node temp = head;
+       //deletion in the beginning of the list
+       if (position==0){
+           head = temp.next;
+       }
+       //deletion is not in the begining og the node
+       for(int i=0;temp!=null && i<position-1;i++){
+           temp = temp.next;
+       }
+       if(temp==null ){
+           return;
+       }
+       temp.next = temp.next.next;
+    }
+
+    //reversal of Linked List
+    public void reverseLL(){
+       //creating 3 different pointers
+       Node curr = head;
+       Node prev = null;
+       Node nextptr = null;
+
+       while (curr!=null) {
+           nextptr = curr.next;
+           curr.next = prev;
+           prev = curr;
+           curr = nextptr;
+       }
+       head = prev;
+    }
     public static void main(String[] args) {
-        LL_insertInMiddle llist = new LL_insertInMiddle();
-        llist.insertAtTheEnd(2);
-        llist.insertAtTheEnd(4);
-        llist.insertAtTheEnd(6);
-        llist.insertAtTheEnd(8);
-        llist.displayLL();
-        llist.insertAfter(llist.head.next.next, 10);
-        llist.displayLL();
+        System.out.println("Linked List Initialized");
     }
 }
